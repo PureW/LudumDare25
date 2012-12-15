@@ -7,10 +7,15 @@
 #include "res_handler.h"
 #include "particle.h"
 
+#include "gameHandler.hpp"
+
 
 int main(int argc, char* argv[]) 
 {
-
+	GameHandler gh;
+	gh.update();
+	
+	
 	// Create the main rendering window
 	sf::RenderWindow App(sf::VideoMode(800, 600, 32), "SFML Graphics");
 

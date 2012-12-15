@@ -20,7 +20,8 @@ configure_file(
 include_directories("${PROJECT_BINARY_DIR}"
 				"src/res_handler"
 				"src/particle_handler"
-				"src/various")
+				"src/various"
+				"src/core")
 
 
 # Define sources and executable
