@@ -20,3 +20,5 @@ echo "*** Executing CMake ***"
 cmake -DCMAKE_BUILD_TYPE=$BUILD .. 
 echo "*** Executing Make ***"
 make $2 
+
+cp myproject ..

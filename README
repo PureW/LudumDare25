@@ -1,0 +1,7 @@
+
+
+Compiling on windows with MinGW and CMake:
+
+(SFML-1.6 installed to c:/dev/SFML-1.6/)
+
+$ cmake -G "MSYS Makefiles" -DSFML_ROOT=C:/dev/SFML-1.6/ ..

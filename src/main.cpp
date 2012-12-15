@@ -3,11 +3,18 @@
 #include <SFML/Graphics.hpp>
 
 #include "config.h"
+#include "graphics.h"
+
 
 int main(int argc, char* argv[]) 
 {
+
 	// Create the main rendering window
 	sf::RenderWindow App(sf::VideoMode(800, 600, 32), "SFML Graphics");
+
+
+	Renderer renderer();
+
 
 	// Start game loop
 	while (App.IsOpened())
