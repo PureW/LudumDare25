@@ -11,13 +11,10 @@ class Particle
 {
 public:
 
-	Particle() {};
+	Particle();
 	virtual ~Particle();
 
-	void update();
-
-	/** Inherited classes implement their logic in updateLogic.  */
-	virtual void updateLogic();
+	virtual void update();
 
 	void updateParticle();
 
@@ -29,7 +26,10 @@ protected:
 	float velocity_x,velocity_y, velocity_max;
 
 	float mass, friction;
-	float angular_momentum;
+
+	float angular_speed;
+	float moment_of_inertia;
+	float angular_friction;
 
 private:
 

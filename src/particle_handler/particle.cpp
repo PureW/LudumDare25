@@ -5,11 +5,24 @@
 
 
 
+Particle::Particle()
+{
+	mass = 1.0;
+	friction = 0.1;
+
+	angular_speed = 0.0;
+	moment_of_inertia = 1.0;
+}
+
+Particle::~Particle()
+{
+
+}
+
 
 
 void Particle::update()
 {
-	updateLogic();
 	updateParticle();
 }
 
@@ -17,16 +30,23 @@ void Particle::update()
 
 void Particle::addForce(float angle, float force)
 {
+
 	velocity_x += cos(angle) * force;
 	velocity_y += sin(angle) * force;
 
+}
 
+void Particle::addRotationalForce( float force )
+{
+	angular_speed += force * moment_of_inertia;
 }
 
 
 void Particle::updateParticle()
 {
-
+	velocity_x *= friction;
+	velocity_y *= friction;
+	angular_speed *= angular_friction;
 
 
 
