@@ -40,14 +40,18 @@ void ResourceHandler::loadTextures()
 		fin.getline(tmp,buf);
 		std::string fileToAdd(tmp);
 		fileList.push_back(fileToAdd);
+
+		sf::Image* sprite = new sf::Image;
+		if (!sprite->LoadFromFile(fileToAdd.c_str()))
+			ERROR("Could not load "<<fileToAdd);
+
+		spriteMap.insert( std::pair<std::string,sf::Image*>(fileToAdd, sprite) );
+
 	}
+}
 
 
-	sf::Image sprite;
-
-	//sprite.LoadFromMemory("res/ship1.png");
-
-
-
-
+sf::Image* ResourceHandler::getSprite(std::string filename)
+{
+	return spriteMap[filename];
 }

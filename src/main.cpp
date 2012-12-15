@@ -18,6 +18,10 @@ int main(int argc, char* argv[])
 
 	resHandler.loadAllResources();
 
+	sf::Image* shipImage = resHandler.getSprite(std::string("res/sprites/ship1.png"));
+
+	sf::Sprite shipSprite;
+	shipSprite.SetImage(*shipImage);
 
 	// Start game loop
 	while (App.IsOpened())
@@ -33,6 +37,8 @@ int main(int argc, char* argv[])
 
 		// Clear the screen (fill it with black color)
 		App.Clear();
+
+		App.Draw(shipSprite);
 
 		// Display window contents on screen
 		App.Display();
