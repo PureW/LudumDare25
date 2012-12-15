@@ -1,0 +1,51 @@
+
+
+#include "event_handler.h"
+
+
+
+
+
+
+
+EventHandler::EventHandler( sf::RenderWindow *_App )
+{
+	App = _App;
+}
+
+
+const UserEvents  EventHandler::processEvents()
+{
+	const sf::Input& Input = App->GetInput();
+
+	events.pressingForward = Input.IsKeyDown(sf::Key::Comma) | Input.IsKeyDown(sf::Key::W);
+	events.pressingBackward = Input.IsKeyDown(sf::Key::Comma) | Input.IsKeyDown(sf::Key::W);
+	events.pressingLeft = Input.IsKeyDown(sf::Key::A);
+	events.pressingRight = Input.IsKeyDown(sf::Key::D) | Input.IsKeyDown(sf::Key::E);
+	events.pressingSpace = Input.IsKeyDown(sf::Key::Space);
+	events.mouse_x = Input.GetMouseX();
+	events.mouse_y = Input.GetMouseY();
+
+	// Process events
+	sf::Event Event;
+	while (App->GetEvent(Event))
+	{
+		switch( Event.Type )
+		{
+		case sf::Event::Closed: // Close window : exit
+			App->Close();
+			break;
+		case sf::Event::KeyPressed:
+		case sf::Event::KeyReleased:
+			//processKeyEvent( Event );
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
+	return events;
+}
+
