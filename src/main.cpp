@@ -2,8 +2,9 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+#include "common.h"
 #include "config.h"
-#include "graphics.h"
+#include "res_handler.h"
 
 
 int main(int argc, char* argv[]) 
@@ -13,7 +14,9 @@ int main(int argc, char* argv[])
 	sf::RenderWindow App(sf::VideoMode(800, 600, 32), "SFML Graphics");
 
 
-	Renderer renderer();
+	ResourceHandler resHandler;
+
+	resHandler.loadAllResources();
 
 
 	// Start game loop

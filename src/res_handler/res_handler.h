@@ -3,7 +3,7 @@
 #define RES_HANDLER_H_
 
 
-
+#include <map>
 
 
 
@@ -23,7 +23,7 @@ private:
 	void loadTextures();
 
 
-
+	std::map<char*, sf::Image> spriteMap;
 
 };
 

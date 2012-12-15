@@ -18,15 +18,17 @@ configure_file(
   "${PROJECT_BINARY_DIR}/config.h"
   )
 include_directories("${PROJECT_BINARY_DIR}"
-				"Core")
+				"src/res_handler"
+				"src/various")
 
 
 # Define sources and executable
-FILE(GLOB_RECURSE SOURCES src/*.cpp)
-set(SOURCES Core/graphics.cpp)
+#set(SOURCES Core/graphics.cpp)
+FILE(GLOB_RECURSE SOURCES "src/*.cpp")
+
 
 set(EXECUTABLE_NAME "myproject")
-add_executable(${EXECUTABLE_NAME} src/main.cpp)
+add_executable(${EXECUTABLE_NAME} ${SOURCES})
 
 
 # Detect and add SFML
