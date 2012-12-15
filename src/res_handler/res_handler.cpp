@@ -45,6 +45,8 @@ void ResourceHandler::loadTextures()
 		if (!sprite->LoadFromFile(fileToAdd.c_str()))
 			ERROR("Could not load "<<fileToAdd);
 
+		sf::Color cornerColour = sprite->GetPixel(0,0);
+		sprite->CreateMaskFromColor(cornerColour);
 		spriteMap.insert( std::pair<std::string,sf::Image*>(fileToAdd, sprite) );
 
 	}

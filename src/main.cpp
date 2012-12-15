@@ -5,6 +5,7 @@
 #include "common.h"
 #include "config.h"
 #include "res_handler.h"
+#include "particle.h"
 
 
 int main(int argc, char* argv[]) 
