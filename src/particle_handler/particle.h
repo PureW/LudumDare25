@@ -4,7 +4,7 @@
 #ifndef PARTICLE_H_
 #define PARTICLE_H_
 
-
+#define PI 3.14159265
 
 
 class Particle
@@ -21,9 +21,14 @@ public:
 	void addForce(float angle, float force);
 	void addRotationalForce( float force );
 
+	float getX() {return x;};
+	float getY() {return y;};
+	float getRotation() {return rotation;};
+
+
 protected:
 	float x,y,rotation;
-	float velocity_x,velocity_y, velocity_max;
+	float velocity_x,velocity_y, velocity_max,acceleration_max;
 
 	float mass, friction;
 
