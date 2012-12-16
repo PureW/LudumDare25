@@ -1,20 +1,18 @@
 
 
 #include <string>
+#include <list>
+
 #include "yaml-cpp/yaml.h"
 
 #include "motherShip.hpp"
 #include "event_handler.h"
 #include "gameModel.hpp"
+#include "projectile.hpp"
 
 #define MS_HP 100
 #define MS_EP 100
 #define MS_RADIUS 50
-
-
-using namespace std;
-
-
 
 
 MotherShip::MotherShip(GameModel* gameModel, sf::RenderWindow* renderWindow)
@@ -51,8 +49,32 @@ void MotherShip::processInput()
 	if (events.pressingLeft)
 		addRotationalForce(0.2);
 
-	if (events.pressingF9)
+	if (events.pressingSpace && !oldEvents.pressingSpace)
+	{
+		std::cout << "Spawning projectile at "<<x<<"\n";
+		Projectile* proj = new Projectile(gameModel, renderWindow );
+		proj->setPosition( x, y );
+
+		std::list<Entity*> entities =	gameModel->getEntitiesWithinRadius(x,y,400);
+		std::list<Entity*>::iterator it = entities.begin();
+
+		for (;it != entities.end(); ++it )
+		{
+			if (*it != (Entity*)this)
+			{
+				proj->setTarget(*it);
+				std::cout << "Setting target\n";
+			}
+		}
+
+		gameModel->addEntity( proj );
+	}
+
+
+	if (events.pressingF9 && !oldEvents.pressingF9)
 		setParticleProperties("res/config/ship_properties.yaml");
+
+	oldEvents = events;
 
 }
 

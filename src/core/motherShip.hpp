@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "entity.hpp"
+#include "event_handler.h"
 
 class EventHandler;
 class GameModel;
@@ -21,6 +22,8 @@ private:
 	sf::RenderWindow* renderWindow;
 	EventHandler* eventHandler;
 	
+	UserEvents oldEvents;
+
 };
 
 

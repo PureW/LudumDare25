@@ -26,10 +26,11 @@ public:
 	void applyDamage(int damageHP);
 	float get_x();
 	float get_y();
-	
-protected:
 	void setPosition(float new_x, float new_y);
 	
+protected:
+	
+
 	GameModel* gameModel;
 	sf::Sprite* sprite;
 	sf::RenderWindow* renderWindow;

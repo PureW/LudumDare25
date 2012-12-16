@@ -22,6 +22,7 @@ include_directories("${PROJECT_BINARY_DIR}"
 				"src/particle_handler"
 				"src/core"
 				"src/event_handler"
+				"src/game_objs"
 				"src/various")
 
 
