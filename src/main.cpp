@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
 
 	float bgX=400,bgY=400;
 
-	int numStars=20;
+	unsigned numStars=20;
 	std::vector<sf::Shape> stars;
 	stars.resize(numStars);
 	for (unsigned i=0; i<numStars; ++i)
@@ -59,21 +59,24 @@ int main(int argc, char* argv[])
 	{
 		UserEvents events;
 		events = eventHandler.processEvents();
-		shipPart.addForce(0,((float)events.mouse_x-shipPart.getX()));
-		shipPart.addForce(90, ((float)events.mouse_y-shipPart.getY()));
+
+		if (events.pressingForward)
+			shipPart.addForce(shipPart.getRotation(),100);
+		if (events.pressingRight)
+			shipPart.addRotationalForce(-0.2);
+		if (events.pressingLeft)
+				shipPart.addRotationalForce(0.2);
 
 		shipPart.update();
 		shipSprite.SetX(shipPart.getX());
 		shipSprite.SetY(shipPart.getY());
-		shipSprite.SetRotation(shipPart.getRotation());
+		shipSprite.SetRotation(shipPart.getRotation()-90);
 
 		bgX += 0.01;
 		bgY += 0.005;
 
 		andromedaSprite.SetX(bgX);
 		andromedaSprite.SetY(bgY);
-
-
 
 		// Clear the screen (fill it with black color)
 		App.Clear();
