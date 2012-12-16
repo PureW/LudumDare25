@@ -54,23 +54,22 @@ void MotherShip::processInput()
 
 	if (events.pressingSpace && !oldEvents.pressingSpace)
 	{
-		std::cout << "Spawning projectile at "<<x<<"\n";
-		Projectile* proj = new Projectile(gameModel, renderWindow );
-		proj->setPosition( x, y );
-
-		std::list<Entity*> entities =	gameModel->getEntitiesWithinRadius(x,y,400);
-		std::list<Entity*>::iterator it = entities.begin();
-
-		for (;it != entities.end(); ++it )
+		std::list<Entity*> entities = gameModel->getEntitiesWithinRadius(x, y, 400);
+		std::list<Entity*>::iterator entityIt;
+		for(entityIt = entities.begin(); entityIt != entities.end(); entityIt++)
 		{
-			if (*it != (Entity*)this)
-			{
-				proj->setTarget(*it);
-				std::cout << "Setting target\n";
+			Entity* entity = *entityIt;
+			if(entity->getTeam() == ENEMY) {
+				std::cout << "Spawning projectile at "<<x<<"\n";
+				Projectile* proj = new Projectile(gameModel, renderWindow, ENEMY);
+				proj->setPosition( x, y );
+				proj->setTarget(entity);
+				gameModel->addEntity( proj );
+				
+				break;
 			}
 		}
-
-		gameModel->addEntity( proj );
+		
 	}
 
 

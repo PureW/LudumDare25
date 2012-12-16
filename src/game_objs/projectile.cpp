@@ -1,9 +1,13 @@
 
-
+#include <list>
 #include <cmath>
 #include <iostream>
 
+#include "gameModel.hpp"
 #include "projectile.hpp"
+
+#define RADIUS 10
+#define DAMAGE 30
 
 
 
@@ -22,15 +26,28 @@ void Projectile::update()
 		//std::cout << "target->get_x()"<<target->get_x()<<" rot: "<<rot<< "diff_x: "<<diff_x<<std::endl;
 
 		sprite->SetRotation(rot);
+		
 	}
+	
+	std::list<Entity*> entities = gameModel->getEntitiesWithinRadius(x, y, RADIUS, this);
+	std::list<Entity*>::iterator entityIt;
+	for(entityIt = entities.begin(); entityIt != entities.end(); entityIt++) {
+		Entity* entity = *entityIt;
+		if(entity->getTeam() == myEnemyTeam) {
+			entity->applyDamage(DAMAGE);
+			destroy();
+		}
+	}
+	
 	Entity::update();
 
 }
 
 
-Projectile::Projectile( GameModel* gameModel, sf::RenderWindow* renderWindow )
+Projectile::Projectile( GameModel* gameModel, sf::RenderWindow* renderWindow, Team _myEnemyTeam )
  : Entity(gameModel,std::string("res/sprites/proj1.png"), renderWindow,NEUTRAL,100, 100, false, 1)
 {
+	myEnemyTeam = _myEnemyTeam;
 	target = 0;
 
 }
