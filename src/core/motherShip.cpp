@@ -1,6 +1,7 @@
 #include <string>
 #include "motherShip.hpp"
 #include "event_handler.h"
+#include "gameModel.hpp"
 
 #define MS_HP 100
 #define MS_EP 100
@@ -28,8 +29,8 @@ MotherShip::~MotherShip()
 void MotherShip::update()
 {
 	Entity::update();
-	
 	processInput();
+	gameModel->setCenterViewPosition(x, y);
 }
 
 
@@ -43,6 +44,7 @@ void MotherShip::processInput()
 	else if(events.pressingDown) {
 		velocity_x = 0;
 		velocity_y = 1;
+		hp = 0;
 	}
 	else if(events.pressingLeft) {
 		velocity_x = -1;

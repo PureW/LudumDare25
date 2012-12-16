@@ -19,9 +19,17 @@ public:
 		Team team, int maxHP, int maxEP, bool immune, float radius);
 	virtual ~Entity();
 	virtual void update();
-	virtual void draw();
+	virtual void draw(float xOffset, float yOffset);
+	void setDeathObject(Entity* entity);
+	virtual void onDestroy();
+	Team getTeam();
+	void applyDamage(int damageHP);
+	float get_x();
+	float get_y();
 	
 protected:
+	void setPosition(float new_x, float new_y);
+	
 	GameModel* gameModel;
 	sf::Sprite* sprite;
 	sf::RenderWindow* renderWindow;
@@ -32,6 +40,7 @@ protected:
 	Team team;
 	bool immune;
 	float radius;
+	Entity* deathObject;
 	
 };
 

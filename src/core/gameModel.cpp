@@ -1,9 +1,11 @@
 #include <iostream>
+#include <cmath>
 
 #include "gameModel.hpp"
 #include "motherShip.hpp"
 #include "entity.hpp"
 #include "areaEffect.hpp"
+#include "delayedExplosion.hpp"
 
 using namespace std;
 
@@ -14,7 +16,11 @@ GameModel::GameModel(sf::RenderWindow* renderWindow)
 	this->renderWindow = renderWindow;
 	done = false;
 	
+	Entity* entity = new Entity(this, std::string("res/sprites/ship1.png"), renderWindow, 
+		ENEMY, 100, 100, false, 20);
+	addEntity(entity);
 	Entity* motherShip = new MotherShip(this, renderWindow);
+	motherShip->setDeathObject(new DelayedExplosion(this, renderWindow));
 	addEntity(motherShip);
 }
 
@@ -90,18 +96,29 @@ void GameModel::draw()
 {
 	renderWindow->Clear();
 	
+	int screenOrigin_x = center_x - renderWindow->GetWidth() / 2;
+	int screenOrigin_y = center_y - renderWindow->GetHeight() / 2;
+	
+	
 	list<Entity*>::iterator entityIt;
 	for(entityIt=entities.begin(); entityIt != entities.end(); entityIt++) {
-		(*entityIt)->draw();
+		(*entityIt)->draw(screenOrigin_x, screenOrigin_y);
 	}
 	
 	list<AreaEffect*>::iterator areaEffectIt;
 	for(areaEffectIt=areaEffects.begin(); areaEffectIt != areaEffects.end(); areaEffectIt++) {
-		(*areaEffectIt)->draw();
+		(*areaEffectIt)->draw(screenOrigin_x, screenOrigin_y);
 	}
 	
 	renderWindow->Display();
 }
+
+void GameModel::setCenterViewPosition(int x, int y)
+{
+	center_x = x;
+	center_y = y;
+}
+
 
 
 bool GameModel::isDone()
@@ -110,9 +127,24 @@ bool GameModel::isDone()
 }
 
 
+list<Entity*> GameModel::getEntitiesWithinRadius(float x, float y, float radius)
+{
+	list<Entity*> entitiesWithinRadius = list<Entity*>();
+	list<Entity*>::iterator entityIt;
+	for(entityIt = entities.begin(); entityIt != entities.end(); entityIt++) {
+		Entity* entity = *entityIt;
+		if(isEntityWithinRadius(entity, x, y, radius)) {
+			entitiesWithinRadius.push_back(entity);
+		}
+	}
+	return entitiesWithinRadius;
+}
 
-
-
+bool GameModel::isEntityWithinRadius(Entity* entity, float x, float y, float radius)
+{
+	float distance = sqrt( pow(entity->get_x()-x, 2) + pow(entity->get_y()-y, 2) );
+	return distance <= radius;
+}
 
 
 

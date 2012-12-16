@@ -7,7 +7,7 @@
 class Drawing
 {
 public:
-	virtual void draw() {};
+	virtual void draw(float xOffset, float yOffset) {};
 
 protected:
 	sf::Sprite* sprite;
