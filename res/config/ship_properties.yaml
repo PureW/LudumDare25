@@ -9,4 +9,4 @@ angular_friction: 	0.08
 moment_of_inertia: 	5
 
 velocity_max:		10
-acceleration_max: 	0.2
+acceleration_max: 	2

@@ -16,6 +16,7 @@ EventHandler::EventHandler( sf::RenderWindow *_App )
 
 const UserEvents  EventHandler::processEvents()
 {
+	// Todo: Cache events...
 	const sf::Input& Input = App->GetInput();
 
 	events.pressingUp = Input.IsKeyDown(sf::Key::Comma) | Input.IsKeyDown(sf::Key::W);

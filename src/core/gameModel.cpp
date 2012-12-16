@@ -16,6 +16,7 @@ GameModel::GameModel(sf::RenderWindow* renderWindow)
 	
 	Entity* motherShip = new MotherShip(this, renderWindow);
 	addEntity(motherShip);
+	std::cout <<"Adding mothership\n";
 }
 
 

@@ -11,6 +11,7 @@
 Particle::Particle()
 {
 	x=200,y=200;
+	velocity_x = velocity_y = 0;
 
 	mass = 100;
 	friction = 0.05;

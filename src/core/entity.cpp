@@ -33,6 +33,7 @@ void Entity::draw()
 {
 	sprite->SetX(x);
 	sprite->SetY(y);
+	sprite->SetRotation(getRotation()-90);
 	
 	renderWindow->Draw(*sprite);
 }

@@ -29,15 +29,17 @@ int main(int argc, char* argv[])
 	App.UseVerticalSync(true);
 	App.SetFramerateLimit(60);
 	
+
+#define MARTNO
+
+#ifdef MARTNO
+
 	GameHandler gh(&App);
 	while(!gh.isDone()) {
 		gh.update();
 	}
 	
-	
-
-/*
-
+#else
 	EventHandler eventHandler(&App);
 
 
@@ -108,7 +110,8 @@ int main(int argc, char* argv[])
 		// Display window contents on screen
 		App.Display();
 	}
-	* */
+
+#endif
 
 	return 0;
 }
