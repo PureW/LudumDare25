@@ -20,6 +20,7 @@ configure_file(
 include_directories("${PROJECT_BINARY_DIR}"
 				"src/res_handler"
 				"src/particle_handler"
+				"src/core"
 				"src/event_handler"
 				"src/various")
 

@@ -15,21 +15,33 @@
 
 
 
+
+#include "gameHandler.hpp"
+
+
+
 int main(int argc, char* argv[]) 
 {
 
+	
 	// Create the main rendering window
 	sf::RenderWindow App(sf::VideoMode(800, 600, 32), "SFML Graphics");
 	App.UseVerticalSync(true);
 	App.SetFramerateLimit(60);
+	
+	GameHandler gh(&App);
+	while(!gh.isDone()) {
+		gh.update();
+	}
+	
+	
 
-	ResourceHandler resHandler;
-	resHandler.loadAllResources();
+/*
 
 	EventHandler eventHandler(&App);
 
 
-	sf::Image* shipImage = resHandler.getSprite(std::string("res/sprites/ship1.png"));
+	sf::Image* shipImage = ResourceHandler::getInstance()->getImage(std::string("res/sprites/ship1.png"));
 
 	sf::Sprite shipSprite;
 	shipSprite.SetImage(*shipImage);
@@ -40,7 +52,7 @@ int main(int argc, char* argv[])
 	shipSprite.SetX(200);
 	shipSprite.SetY(200);
 
-	sf::Image* andromedaImage = resHandler.getSprite(std::string("res/sprites/m31_ware_big.jpg"));
+	sf::Image* andromedaImage = ResourceHandler::getInstance()->getImage(std::string("res/sprites/m31_ware_big.jpg"));
 	sf::Sprite andromedaSprite;
 	andromedaSprite.SetImage(*andromedaImage);
 	andromedaSprite.SetScale(0.25,0.25);
@@ -62,7 +74,7 @@ int main(int argc, char* argv[])
 		UserEvents events;
 		events = eventHandler.processEvents();
 
-		if (events.pressingForward)
+		if (events.pressingUp)
 			shipPart.addForce(shipPart.getRotation(),1);
 		if (events.pressingRight)
 			shipPart.addRotationalForce(-0.2);
@@ -96,6 +108,7 @@ int main(int argc, char* argv[])
 		// Display window contents on screen
 		App.Display();
 	}
+	* */
 
 	return 0;
 }

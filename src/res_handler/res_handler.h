@@ -11,29 +11,27 @@
 class ResourceHandler
 {
 public:
-
+	static ResourceHandler* getInstance();
+	
 	/** Load all textures */
 	void loadAllResources();
 
 	// Retrieve pointer to filename
-	sf::Image* getSprite(std::string filename);
+	sf::Image* getImage(std::string filename);
+	
+	sf::Sprite* createSprite(std::string filename);
 
 
 private:
-
+	ResourceHandler() {};
+	static ResourceHandler* instance;
+	
 	void loadTextures();
 
 
 	std::map<std::string, sf::Image*> spriteMap;
 
 };
-
-
-
-
-
-
-
 
 
 
