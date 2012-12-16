@@ -1,5 +1,7 @@
 
 #include <iostream>
+#include <vector>
+#include <cstdlib>
 #include <SFML/Graphics.hpp>
 
 #include "common.h"
@@ -43,6 +45,15 @@ int main(int argc, char* argv[])
 
 	float bgX=400,bgY=400;
 
+	int numStars=20;
+	std::vector<sf::Shape> stars;
+	stars.resize(numStars);
+	for (unsigned i=0; i<numStars; ++i)
+	{
+		stars[i] = sf::Shape::Circle(rand()%600,rand()%600,1,sf::Color(255,255,255));
+	}
+
+
 	// Start game loop
 	while (App.IsOpened())
 	{
@@ -58,6 +69,7 @@ int main(int argc, char* argv[])
 
 		bgX += 0.01;
 		bgY += 0.005;
+
 		andromedaSprite.SetX(bgX);
 		andromedaSprite.SetY(bgY);
 
@@ -66,6 +78,8 @@ int main(int argc, char* argv[])
 		// Clear the screen (fill it with black color)
 		App.Clear();
 
+		for (unsigned i=0; i<numStars; ++i)
+			App.Draw(stars[i]);
 		App.Draw(andromedaSprite);
 
 		App.Draw(shipSprite);
