@@ -17,8 +17,14 @@ GameModel::GameModel(sf::RenderWindow* renderWindow)
 	this->renderWindow = renderWindow;
 	done = false;
 	
-	SmallEnemy* smallEnemy = new SmallEnemy(this, renderWindow);
-	addEntity(smallEnemy);
+	SmallEnemy* smallEnemy1 = new SmallEnemy(this, renderWindow);
+	smallEnemy1->setPosition(201, 200);
+	addEntity(smallEnemy1);
+	SmallEnemy* smallEnemy2 = new SmallEnemy(this, renderWindow);
+	smallEnemy2->setPosition(200, 201);
+	addEntity(smallEnemy2);
+	SmallEnemy* smallEnemy3 = new SmallEnemy(this, renderWindow);
+	addEntity(smallEnemy3);
 	
 	motherShip = new MotherShip(this, renderWindow);
 	motherShip->setDeathObject(new DelayedExplosion(this, renderWindow));
