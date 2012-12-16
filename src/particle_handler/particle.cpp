@@ -27,11 +27,6 @@ Particle::~Particle()
 
 
 
-void Particle::update()
-{
-	updateParticle();
-}
-
 
 
 void Particle::addForce(float angle, float force)
@@ -56,8 +51,10 @@ void Particle::addRotationalForce( float force )
 }
 
 
-void Particle::updateParticle()
+
+void Particle::update()
 {
+
 	velocity_x *= (1-friction);
 	velocity_y *= (1-friction);
 	angular_speed *= angular_friction;

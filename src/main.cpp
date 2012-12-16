@@ -36,6 +36,13 @@ int main(int argc, char* argv[])
 	shipSprite.SetX(200);
 	shipSprite.SetY(200);
 
+	sf::Image* andromedaImage = resHandler.getSprite(std::string("res/sprites/m31_ware_big.jpg"));
+	sf::Sprite andromedaSprite;
+	andromedaSprite.SetImage(*andromedaImage);
+	andromedaSprite.SetScale(0.25,0.25);
+
+	float bgX=400,bgY=400;
+
 	// Start game loop
 	while (App.IsOpened())
 	{
@@ -49,11 +56,20 @@ int main(int argc, char* argv[])
 		shipSprite.SetY(shipPart.getY());
 		shipSprite.SetRotation(shipPart.getRotation());
 
+		bgX += 0.01;
+		bgY += 0.005;
+		andromedaSprite.SetX(bgX);
+		andromedaSprite.SetY(bgY);
+
+
 
 		// Clear the screen (fill it with black color)
 		App.Clear();
 
+		App.Draw(andromedaSprite);
+
 		App.Draw(shipSprite);
+
 
 		// Display window contents on screen
 		App.Display();
