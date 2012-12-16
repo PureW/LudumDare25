@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 		events = eventHandler.processEvents();
 
 		if (events.pressingForward)
-			shipPart.addForce(shipPart.getRotation(),100);
+			shipPart.addForce(shipPart.getRotation(),1);
 		if (events.pressingRight)
 			shipPart.addRotationalForce(-0.2);
 		if (events.pressingLeft)
