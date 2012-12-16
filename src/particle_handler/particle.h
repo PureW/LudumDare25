@@ -1,6 +1,5 @@
 
 
-
 #ifndef PARTICLE_H_
 #define PARTICLE_H_
 
@@ -50,8 +49,7 @@ private:
 
 
 
-
-
+float atan(float x,float y);
 
 
 

@@ -6,7 +6,20 @@
 
 #include "particle.h"
 
+float atan(float x,float y)
+{
+	float rot;
+	if (x==0)
+		rot = 0;
+	else
+		rot = atan( -y/x ) * 180 / PI;
+	if (x<0 && y<0)
+		rot += 180;
+	if (x<0 && y>0)
+		rot += 180;
 
+	return rot;
+}
 
 Particle::Particle()
 {
