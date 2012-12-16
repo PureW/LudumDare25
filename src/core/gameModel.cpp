@@ -19,7 +19,8 @@ GameModel::GameModel(sf::RenderWindow* renderWindow)
 	Entity* entity = new Entity(this, std::string("res/sprites/ship1.png"), renderWindow, 
 		ENEMY, 100, 100, false, 20);
 	addEntity(entity);
-	Entity* motherShip = new MotherShip(this, renderWindow);
+	
+	motherShip = new MotherShip(this, renderWindow);
 	motherShip->setDeathObject(new DelayedExplosion(this, renderWindow));
 	addEntity(motherShip);
 }
@@ -127,17 +128,36 @@ bool GameModel::isDone()
 }
 
 
-list<Entity*> GameModel::getEntitiesWithinRadius(float x, float y, float radius)
+list<Entity*> GameModel::getEntitiesWithinRadius(float x, float y, float radius, Entity* excludeEntity)
 {
 	list<Entity*> entitiesWithinRadius = list<Entity*>();
 	list<Entity*>::iterator entityIt;
 	for(entityIt = entities.begin(); entityIt != entities.end(); entityIt++) {
 		Entity* entity = *entityIt;
-		if(isEntityWithinRadius(entity, x, y, radius)) {
+		if(isEntityWithinRadius(entity, x, y, radius) && entity != excludeEntity) {
 			entitiesWithinRadius.push_back(entity);
 		}
 	}
+	
 	return entitiesWithinRadius;
+}
+
+MotherShip* GameModel::getMotherShip()
+{
+	return motherShip;
+}
+
+std::list<Entity*> GameModel::getEntitiesInTeam(Team team)
+{
+	list<Entity*> entitiesInTeam = list<Entity*>();
+	list<Entity*>::iterator entityIt;
+	for(entityIt = entities.begin(); entityIt != entities.end(); entityIt++) {
+		Entity* entity = *entityIt;
+		if(entity->getTeam() == team) {
+			entitiesInTeam.push_back(entity);
+		}
+	}
+	return entitiesInTeam;
 }
 
 bool GameModel::isEntityWithinRadius(Entity* entity, float x, float y, float radius)

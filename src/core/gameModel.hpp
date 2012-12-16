@@ -3,9 +3,11 @@
 
 #include <list>
 #include <SFML/Graphics.hpp>
+#include "entity.hpp"
 
 class Entity;
 class AreaEffect;
+class MotherShip;
 
 class GameModel
 {
@@ -18,11 +20,14 @@ public:
 	void draw();
 	bool isDone();
 	void setCenterViewPosition(int x, int y);
-	std::list<Entity*> getEntitiesWithinRadius(float x, float y, float radius);
-	
-private:
+	std::list<Entity*> getEntitiesWithinRadius(float x, float y, float radius, Entity* excludeEntity=NULL);
+	std::list<Entity*> getEntitiesInTeam(Team team);
+	MotherShip* getMotherShip();
 	bool isEntityWithinRadius(Entity* entity, float x, float y, float radius);
 	
+private:
+	
+	MotherShip* motherShip;
 	sf::RenderWindow* renderWindow;
 	std::list<Entity*> entities;
 	std::list<AreaEffect*> areaEffects;
