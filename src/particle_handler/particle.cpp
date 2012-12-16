@@ -26,7 +26,7 @@ Particle::Particle()
 	x=200,y=200;
 	velocity_x = velocity_y = 0;
 
-	mass = 100;
+	mass = 1;
 	friction = 0.05;
 
 	angular_speed = 0.0;

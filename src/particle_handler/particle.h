@@ -22,6 +22,7 @@ public:
 	float getX() {return x;};
 	float getY() {return y;};
 	float getRotation() {return rotation;};
+	void setRotation(float _rotation) {rotation = _rotation;};
 
 
 	void setParticleProperties(char *filename);
