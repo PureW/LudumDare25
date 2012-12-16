@@ -23,6 +23,7 @@ public:
 
 
 private:
+	ResourceHandler() {};
 	static ResourceHandler* instance;
 	
 	void loadTextures();

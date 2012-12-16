@@ -86,8 +86,8 @@ sf::Sprite* ResourceHandler::createSprite(std::string filename)
 	sf::Image* image = getImage(std::string(filename));
 	sf::Sprite* sprite = new sf::Sprite;
 	sprite->SetImage(*image);
-	//sf::Vector2f spriteSize = sprite->GetSize();
-	//sprite->SetCenter(spriteSize.x/2, spriteSize.y/2);
+	sf::Vector2f spriteSize = sprite->GetSize();
+	sprite->SetCenter(spriteSize.x/2, spriteSize.y/2);
 	return sprite;
 }
 
