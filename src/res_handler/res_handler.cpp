@@ -14,11 +14,14 @@
 
 #define  RESOURCE_FILE_SPRITES "res/res_graphics"
 
+ResourceHandler* ResourceHandler::instance = NULL;
+
 
 ResourceHandler* ResourceHandler::getInstance()
 {
 	if(instance == NULL) {
 		instance = new ResourceHandler();
+		instance->loadAllResources();
 	}
 	return instance;	
 }
@@ -62,7 +65,21 @@ void ResourceHandler::loadTextures()
 }
 
 
-sf::Image* ResourceHandler::getSprite(std::string filename)
+
+sf::Image* ResourceHandler::getImage(std::string filename)
 {
 	return spriteMap[filename];
 }
+
+
+sf::Sprite* ResourceHandler::createSprite(std::string filename)
+{
+	sf::Image* image = getImage(std::string(filename));
+	sf::Sprite* sprite = new sf::Sprite;
+	sprite->SetImage(*image);
+	//sf::Vector2f spriteSize = sprite->GetSize();
+	//sprite->SetCenter(spriteSize.x/2, spriteSize.y/2);
+	return sprite;
+}
+
+

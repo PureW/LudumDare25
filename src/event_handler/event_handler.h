@@ -9,8 +9,8 @@
 
 struct UserEvents
 {
-	bool pressingForward;
-	bool pressingBackward;
+	bool pressingUp;
+	bool pressingDown;
 	bool pressingLeft;
 	bool pressingRight;
 	bool pressingSpace;

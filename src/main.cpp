@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 	// Create the main rendering window
 	sf::RenderWindow App(sf::VideoMode(800, 600, 32), "SFML Graphics");
 	GameHandler gh(&App);
-	gh.update();
+	//gh.update();
 	
 	
 	App.UseVerticalSync(true);
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 	EventHandler eventHandler(&App);
 
 
-	sf::Image* shipImage = resHandler.getSprite(std::string("res/sprites/ship1.png"));
+	sf::Image* shipImage = resHandler.getImage(std::string("res/sprites/ship1.png"));
 
 	sf::Sprite shipSprite;
 	shipSprite.SetImage(*shipImage);
