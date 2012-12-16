@@ -68,7 +68,16 @@ void ResourceHandler::loadTextures()
 
 sf::Image* ResourceHandler::getImage(std::string filename)
 {
-	return spriteMap[filename];
+	std::map<std::string, sf::Image*>::iterator it;
+	it = spriteMap.find(filename);
+
+	if (it != spriteMap.end())
+		return it->second;
+	else
+
+		ERROR("Could not find "<<filename<<" in ResourceHandler");
+
+	return 0;
 }
 
 

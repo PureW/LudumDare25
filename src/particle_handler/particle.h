@@ -16,7 +16,6 @@ public:
 
 	virtual void update();
 
-	void updateParticle();
 
 	void addForce(float angle, float force);
 	void addRotationalForce( float force );
@@ -27,6 +26,8 @@ public:
 
 
 protected:
+	void updateParticle();
+
 	float x,y,rotation;
 	float velocity_x,velocity_y, velocity_max,acceleration_max;
 
