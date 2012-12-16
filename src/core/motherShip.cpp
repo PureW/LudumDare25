@@ -1,4 +1,8 @@
+
+
 #include <string>
+#include "yaml-cpp/yaml.h"
+
 #include "motherShip.hpp"
 #include "event_handler.h"
 #include "gameModel.hpp"
@@ -19,6 +23,7 @@ MotherShip::MotherShip(GameModel* gameModel, sf::RenderWindow* renderWindow)
 	this->gameModel = gameModel;
 	this->renderWindow = renderWindow;
 	this->eventHandler = new EventHandler(renderWindow);
+	setParticleProperties("res/config/ship_properties.yaml");
 }
 
 MotherShip::~MotherShip()
@@ -37,24 +42,18 @@ void MotherShip::update()
 void MotherShip::processInput()
 {
 	UserEvents events = eventHandler->processEvents();
-	if(events.pressingUp) {
-		velocity_x = 0;
-		velocity_y = -1;
-	}
-	else if(events.pressingDown) {
-		velocity_x = 0;
-		velocity_y = 1;
-		hp = 0;
-	}
-	else if(events.pressingLeft) {
-		velocity_x = -1;
-		velocity_y = 0;
-	}
-	else if(events.pressingRight) {
-		velocity_x = 1;
-		velocity_y = 0;
-	}
-	
+
+
+	if (events.pressingUp)
+		addForce(getRotation(),1);
+	if (events.pressingRight)
+		addRotationalForce(-0.2);
+	if (events.pressingLeft)
+		addRotationalForce(0.2);
+
+	if (events.pressingF9)
+		setParticleProperties("res/config/ship_properties.yaml");
+
 }
 
 

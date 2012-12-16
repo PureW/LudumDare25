@@ -11,6 +11,7 @@
 Particle::Particle()
 {
 	x=200,y=200;
+	velocity_x = velocity_y = 0;
 
 	mass = 100;
 	friction = 0.05;
@@ -29,23 +30,19 @@ Particle::~Particle()
 }
 
 
-
-
-
 void Particle::addForce(float angle, float force)
 {
 	float accel_x = (cos(angle/180*PI) * force) / mass;
 	float accel_y = -(sin(angle/180*PI) * force) / mass;
 
-	if (fabs(accel_x) < acceleration_max)
-		velocity_x += accel_x;
-	else
-		velocity_x += accel_x/fabs(accel_x)*fabs(acceleration_max);
+	while (accel_x*accel_x + accel_y*accel_y > acceleration_max*acceleration_max)
+	{
+		accel_x *= 0.98;
+		accel_y *= 0.98;
+	}
 
-	if (fabs(accel_y) < acceleration_max)
-		velocity_y += accel_y;
-	else
-		velocity_y += accel_y/fabs(accel_y)*fabs(acceleration_max);
+	velocity_x += accel_x;
+	velocity_y += accel_y;
 }
 
 void Particle::addRotationalForce( float force )

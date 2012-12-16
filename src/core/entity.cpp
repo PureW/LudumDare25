@@ -45,6 +45,7 @@ void Entity::draw(float xOffset, float yOffset)
 	if(sprite != NULL) {
 		sprite->SetX(x - xOffset);
 		sprite->SetY(y - yOffset);
+		sprite->SetRotation(getRotation()-90);
 		
 		renderWindow->Draw(*sprite);
 	}
@@ -62,7 +63,9 @@ void Entity::onDestroy()
 		gameModel->addEntity(deathObject);
 	}
 }
-	
+
+
+
 void Entity::setPosition(float new_x, float new_y)
 {
 	x = new_x;
