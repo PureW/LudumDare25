@@ -29,15 +29,15 @@
 	#define bash_CYAN "\e[1;36m"
 	#define bash_NC "\e[0m" // No Color
 #else
-	#define bash_red
-	#define bash_RED
-	#define bash_yellow
-	#define bash_YELLOW
-	#define bash_blue
-	#define bash_BLUE
-	#define bash_cyan
-	#define bash_CYAN
-	#define bash_NC
+	#define bash_red ""
+	#define bash_RED ""
+	#define bash_yellow ""
+	#define bash_YELLOW ""
+	#define bash_blue ""
+	#define bash_BLUE ""
+	#define bash_cyan ""
+	#define bash_CYAN ""
+	#define bash_NC ""
 #endif
 
 
