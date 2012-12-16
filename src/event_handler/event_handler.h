@@ -20,6 +20,7 @@ struct UserEvents
 	unsigned int mouse_x;
 	unsigned int mouse_y;
 
+	bool pressingF9;
 
 };
 

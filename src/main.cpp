@@ -1,8 +1,10 @@
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
+
 
 #include "common.h"
 #include "config.h"
@@ -13,7 +15,9 @@
 
 
 
+
 #include "gameHandler.hpp"
+
 
 
 int main(int argc, char* argv[]) 
@@ -44,6 +48,7 @@ int main(int argc, char* argv[])
 	sf::Vector2f shipSize =  shipSprite.GetSize();
 	shipSprite.SetCenter(shipSize.x/2, shipSize.y/2);
 	Particle shipPart;
+	shipPart.setParticleProperties("res/config/ship_properties.yaml");
 	shipSprite.SetX(200);
 	shipSprite.SetY(200);
 
@@ -75,6 +80,9 @@ int main(int argc, char* argv[])
 			shipPart.addRotationalForce(-0.2);
 		if (events.pressingLeft)
 				shipPart.addRotationalForce(0.2);
+
+		if (events.pressingF9)
+			shipPart.setParticleProperties("res/config/ship_properties.yaml");
 
 		shipPart.update();
 		shipSprite.SetX(shipPart.getX());

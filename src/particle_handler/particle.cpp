@@ -1,6 +1,8 @@
 
 #include <cmath>
 #include <iostream>
+#include <fstream>
+#include <yaml-cpp/yaml.h>
 
 #include "particle.h"
 
@@ -82,7 +84,31 @@ void Particle::update()
 	x += velocity_x;
 	y += velocity_y;
 
+}
 
+
+
+void Particle::setParticleProperties(char *filename)
+{
+	std::ifstream fin(filename);
+	YAML::Parser parser(fin);
+
+	YAML::Node doc;
+	parser.GetNextDocument(doc);
+	fin.close();
+
+	if (const YAML::Node *pName = doc.FindValue("mass"))
+	    *pName >> mass;
+	if (const YAML::Node *pName = doc.FindValue("friction"))
+	    *pName >> friction;
+	if (const YAML::Node *pName = doc.FindValue("angular_friction"))
+		   *pName >> angular_friction;
+	if (const YAML::Node *pName = doc.FindValue("moment_of_inertia"))
+		    *pName >> moment_of_inertia;
+	if (const YAML::Node *pName = doc.FindValue("velocity_max"))
+			*pName >> velocity_max;
+	if (const YAML::Node *pName = doc.FindValue("acceleration_max"))
+			*pName >> acceleration_max;
 
 
 }
