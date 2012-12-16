@@ -25,23 +25,29 @@ int main(int argc, char* argv[])
 
 	EventHandler eventHandler(&App);
 
-	float x=0,y=0;
 
 	sf::Image* shipImage = resHandler.getSprite(std::string("res/sprites/ship1.png"));
 
 	sf::Sprite shipSprite;
 	shipSprite.SetImage(*shipImage);
+	sf::Vector2f shipSize =  shipSprite.GetSize();
+	shipSprite.SetCenter(shipSize.x/2, shipSize.y/2);
+	Particle shipPart;
+	shipSprite.SetX(200);
+	shipSprite.SetY(200);
 
 	// Start game loop
 	while (App.IsOpened())
 	{
 		UserEvents events;
 		events = eventHandler.processEvents();
-		x += (events.mouse_x-x)*0.010;
-		y += (events.mouse_y-y)*0.010;
-		shipSprite.SetX(x);
-		shipSprite.SetY(y);
+		shipPart.addForce(0,((float)events.mouse_x-shipPart.getX()));
+		shipPart.addForce(90, ((float)events.mouse_y-shipPart.getY()));
 
+		shipPart.update();
+		shipSprite.SetX(shipPart.getX());
+		shipSprite.SetY(shipPart.getY());
+		shipSprite.SetRotation(shipPart.getRotation());
 
 
 		// Clear the screen (fill it with black color)
