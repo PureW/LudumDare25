@@ -15,6 +15,15 @@
 #define  RESOURCE_FILE_SPRITES "res/res_graphics"
 
 
+ResourceHandler* ResourceHandler::getInstance()
+{
+	if(instance == NULL) {
+		instance = new ResourceHandler();
+	}
+	return instance;	
+}
+
+
 void ResourceHandler::loadAllResources()
 {
 	loadTextures();

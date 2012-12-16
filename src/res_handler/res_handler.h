@@ -11,7 +11,8 @@
 class ResourceHandler
 {
 public:
-
+	ResourceHandler* getInstance();
+	
 	/** Load all textures */
 	void loadAllResources();
 
@@ -20,7 +21,8 @@ public:
 
 
 private:
-
+	ResourceHandler* instance;
+	
 	void loadTextures();
 
 
