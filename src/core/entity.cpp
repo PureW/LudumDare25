@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "entity.hpp"
 #include "res_handler.h"
 #include "gameModel.hpp"
@@ -58,6 +60,7 @@ void Entity::setDeathObject(Entity* entity)
 	
 void Entity::onDestroy()
 {
+	std::cout << "destroyed\n";
 	if(deathObject != NULL) {
 		deathObject->setPosition(x, y);
 		gameModel->addEntity(deathObject);

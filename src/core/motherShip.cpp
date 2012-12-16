@@ -22,6 +22,9 @@ MotherShip::MotherShip(GameModel* gameModel, sf::RenderWindow* renderWindow)
 	this->renderWindow = renderWindow;
 	this->eventHandler = new EventHandler(renderWindow);
 	setParticleProperties("res/config/ship_properties.yaml");
+	x = 100;
+	y = 100;
+	
 }
 
 MotherShip::~MotherShip()

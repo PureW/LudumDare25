@@ -6,6 +6,7 @@
 #include "entity.hpp"
 #include "areaEffect.hpp"
 #include "delayedExplosion.hpp"
+#include "smallEnemy.hpp"
 
 using namespace std;
 
@@ -16,9 +17,8 @@ GameModel::GameModel(sf::RenderWindow* renderWindow)
 	this->renderWindow = renderWindow;
 	done = false;
 	
-	Entity* entity = new Entity(this, std::string("res/sprites/ship1.png"), renderWindow, 
-		ENEMY, 100, 100, false, 20);
-	addEntity(entity);
+	SmallEnemy* smallEnemy = new SmallEnemy(this, renderWindow);
+	addEntity(smallEnemy);
 	
 	motherShip = new MotherShip(this, renderWindow);
 	motherShip->setDeathObject(new DelayedExplosion(this, renderWindow));
