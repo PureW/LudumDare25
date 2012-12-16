@@ -25,6 +25,9 @@ public:
 	float getRotation() {return rotation;};
 
 
+	void setParticleProperties(char *filename);
+
+
 protected:
 	void updateParticle();
 

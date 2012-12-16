@@ -36,7 +36,17 @@ add_executable(${EXECUTABLE_NAME} ${SOURCES})
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(SFML 1.6 REQUIRED system window graphics network audio)
-target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})
+
+# Add cpp-yaml
+set (CPP_YAML_ROOT_DIR "libs/yaml-cpp")
+include_directories("${CPP_YAML_ROOT_DIR}/include")
+FILE(GLOB_RECURSE CPP_YAML_SOURCES ${CPP_YAML_ROOT_DIR}/src/*.cpp)
+ADD_LIBRARY( 
+	cpp-yaml
+	${CPP_YAML_SOURCES}
+)
+
+target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} cpp-yaml)
 
 
 # Install target

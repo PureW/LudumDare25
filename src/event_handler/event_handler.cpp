@@ -23,8 +23,12 @@ const UserEvents  EventHandler::processEvents()
 	events.pressingLeft = Input.IsKeyDown(sf::Key::A);
 	events.pressingRight = Input.IsKeyDown(sf::Key::D) | Input.IsKeyDown(sf::Key::E);
 	events.pressingSpace = Input.IsKeyDown(sf::Key::Space);
+
 	events.mouse_x = Input.GetMouseX();
 	events.mouse_y = Input.GetMouseY();
+
+	events.pressingF9 = Input.IsKeyDown(sf::Key::F9);
+
 
 	// Process events
 	sf::Event Event;
