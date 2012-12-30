@@ -8,8 +8,10 @@ set(myproject_VERSION_MINOR 01)
 
 # Compiler options
 set(CMAKE_CXX_FLAGS "-Wall -Wno-write-strings")
+set(CMAKE_C_FLAGS "-Wall -std=c99")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 
 
 
@@ -48,7 +50,17 @@ ADD_LIBRARY(
 	${CPP_YAML_SOURCES}
 )
 
-target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} cpp-yaml)
+# Add Chipmunk 
+set (CHIPMUNK_ROOT_DIR "libs/Chipmunk-6.1.2")
+include_directories("${CHIPMUNK_ROOT_DIR}/include/chipmunk")
+FILE(GLOB_RECURSE CHIPMUNK_SOURCES ${CHIPMUNK_ROOT_DIR}/src/*.c)
+ADD_LIBRARY( 
+	chipmunk
+	${CHIPMUNK_SOURCES}
+)
+
+
+target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES} cpp-yaml chipmunk)
 
 
 # Install target
