@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <iostream>
-
+#include "chipmunk.h"
 #include "projectile.hpp"
 
 
@@ -11,13 +11,16 @@ void Projectile::update()
 {
 	if (target != 0)
 	{
-		float diff_x = target->get_x()-x;
-		float diff_y = target->get_y()-y;
+		cpVect diff_pos = cpvsub(target->getPos(),getPos());
 
-		float rot = atan( diff_x, diff_y );
-		setRotation(rot);
+		float rot = cpvtoangle( diff_pos ) - getA();
 
-		addForce(rotation, 1);
+		addRotation(rot);
+
+		applyImpulse(
+				cpvrotate(cpv(0,1),getRot()),
+				cpv(0,0)
+				);
 		//std::cout << "Moving to target\n";
 		//std::cout << "target->get_x()"<<target->get_x()<<" rot: "<<rot<< "diff_x: "<<diff_x<<std::endl;
 
@@ -29,7 +32,7 @@ void Projectile::update()
 
 
 Projectile::Projectile( GameModel* gameModel, sf::RenderWindow* renderWindow )
- : Entity(gameModel,std::string("res/sprites/proj1.png"), renderWindow,NEUTRAL,100, 100, false, 1)
+ : Entity(gameModel, renderWindow,std::string("res/sprites/proj1.png"),NEUTRAL,100, 100)
 {
 	target = 0;
 
@@ -41,14 +44,4 @@ void Projectile::onDestroy()
 }
 
 
-void Projectile::draw(float xOffset, float yOffset)
-{
-	if(sprite != NULL) {
-		sprite->SetX(x - xOffset);
-		sprite->SetY(y - yOffset);
-		sprite->SetRotation(getRotation()-90);
-		sprite->SetScale(0.5,0.5);
 
-		renderWindow->Draw(*sprite);
-	}
-}

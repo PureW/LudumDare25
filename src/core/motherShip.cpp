@@ -16,12 +16,13 @@
 
 
 MotherShip::MotherShip(GameModel* gameModel, sf::RenderWindow* renderWindow)
-: Entity(gameModel, std::string("res/sprites/ship1.png"), renderWindow, PLAYER, MS_HP, MS_EP, false, MS_RADIUS)
+: Entity(gameModel, renderWindow,std::string("res/sprites/ship1.png"), PLAYER)
 {
 	this->gameModel = gameModel;
 	this->renderWindow = renderWindow;
 	this->eventHandler = new EventHandler(renderWindow);
-	setParticleProperties("res/config/ship_properties.yaml");
+
+	setBodyProperties("res/config/ship_properties.yaml");
 }
 
 MotherShip::~MotherShip()
@@ -33,7 +34,8 @@ void MotherShip::update()
 {
 	Entity::update();
 	processInput();
-	gameModel->setCenterViewPosition(x, y);
+	cpVect pos = getPos();
+	gameModel->setCenterViewPosition(pos.x, pos.y);
 }
 
 
@@ -43,19 +45,38 @@ void MotherShip::processInput()
 
 
 	if (events.pressingUp)
-		addForce(getRotation(),1);
+		applyImpulse(
+				cpvrotate(cpv(0,thrust),entityBody->rot),
+				cpv(0,0));
 	if (events.pressingRight)
-		addRotationalForce(-0.2);
+	{
+
+		applyImpulse(
+				cpvrotate(cpv(0,turningForce),entityBody->rot),
+				cpvrotate(cpv(1,0),entityBody->rot));
+		applyImpulse(
+				cpvrotate(cpv(0,-turningForce),entityBody->rot),
+				cpvrotate(cpv(-1,0),entityBody->rot));
+	}
 	if (events.pressingLeft)
-		addRotationalForce(0.2);
+	{
+		applyImpulse(
+				cpvrotate(cpv(0,turningForce),entityBody->rot),
+				cpvrotate(cpv(-1,0),entityBody->rot));
+		applyImpulse(
+				cpvrotate(cpv(0,-turningForce),entityBody->rot),
+				cpvrotate(cpv(1,0),entityBody->rot));
+	}
+	if (events.pressingF9)
+		setBodyProperties("res/config/ship_properties.yaml");
 
 	if (events.pressingSpace && !oldEvents.pressingSpace)
 	{
-		std::cout << "Spawning projectile at "<<x<<"\n";
+		std::cout << "Spawning projectile at "<<getPos().x<<"\n";
 		Projectile* proj = new Projectile(gameModel, renderWindow );
-		proj->setPosition( x, y );
+		proj->setPosition( getPos() );
 
-		std::list<Entity*> entities =	gameModel->getEntitiesWithinRadius(x,y,400);
+		/*std::list<Entity*> entities =	gameModel->getEntitiesWithinRadius(x,y,400);
 		std::list<Entity*>::iterator it = entities.begin();
 
 		for (;it != entities.end(); ++it )
@@ -65,14 +86,14 @@ void MotherShip::processInput()
 				proj->setTarget(*it);
 				std::cout << "Setting target\n";
 			}
-		}
+		}*/
 
 		gameModel->addEntity( proj );
 	}
 
 
 	if (events.pressingF9 && !oldEvents.pressingF9)
-		setParticleProperties("res/config/ship_properties.yaml");
+		setBodyProperties("res/config/ship_properties.yaml");
 
 	oldEvents = events;
 

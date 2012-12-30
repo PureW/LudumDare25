@@ -25,7 +25,8 @@ include_directories("${PROJECT_BINARY_DIR}"
 				"src/core"
 				"src/event_handler"
 				"src/game_objs"
-				"src/various")
+				"src/various"
+				"src/enemies")
 
 
 # Define sources and executable

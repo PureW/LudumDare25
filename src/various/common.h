@@ -1,18 +1,11 @@
 
 
 
+#ifndef COMMON_H_
+#define COMMON_H_
 
 
-
-
-
-
-
-
-
-
-
-
+#define PI 3.14159265
 
 
 
@@ -52,3 +45,6 @@
 	strfile = strfile.substr(strfile.rfind('/')+1, std::string::npos);\
 	std::cout<<bash_red << "ERROR: "<<strfile<<":"<<__LINE__<<" - "<<	TO_COUT << bash_NC << std::endl;\
 	abort();}
+
+
+#endif

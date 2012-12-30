@@ -14,11 +14,12 @@ public:
 	Projectile( GameModel* gameModel, sf::RenderWindow* renderWindow );
 	~Projectile() {};
 
+	void onDestroy();
+
 	void setTarget( Entity* _target ) {target=_target;};
 
 	void update();
-	void draw(float xOffset, float yOffset);
-	void onDestroy();
+
 private:
 	Entity* target;
 

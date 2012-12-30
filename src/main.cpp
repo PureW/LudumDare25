@@ -4,42 +4,33 @@
 #include <vector>
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
-
+#include "chipmunk.h"
 
 #include "common.h"
 #include "config.h"
 #include "res_handler.h"
 #include "particle.h"
 #include "event_handler.h"
-
-
-
-
-
 #include "gameHandler.hpp"
 
 
 
 int main(int argc, char* argv[]) 
 {
-
-	
-	// Create the main rendering window
 	sf::RenderWindow App(sf::VideoMode(800, 600, 32), "SFML Graphics");
-	App.UseVerticalSync(true);
-	App.SetFramerateLimit(60);
 	
+	#define MARTNO
 
-#define MARTNO
+	#ifdef MARTNO
 
-#ifdef MARTNO
+		GameHandler gh(&App);
+		while(!gh.isDone())
+		{
+			gh.update();
+		}
 
-	GameHandler gh(&App);
-	while(!gh.isDone()) {
-		gh.update();
-	}
-	
-#else
+	#else
+
 	EventHandler eventHandler(&App);
 
 
@@ -70,6 +61,30 @@ int main(int argc, char* argv[])
 	}
 
 
+	cpVect gravity = cpv(0,-10);
+	cpSpace *space = cpSpaceNew();
+	cpSpaceSetGravity(space,gravity);
+
+	cpShape *ground = cpSegmentShapeNew(space->staticBody, cpv(-20, 5), cpv(200, -50), 0);
+	cpShapeSetFriction(ground, 1);
+	cpSpaceAddShape(space, ground);
+
+	cpFloat radius = 5;
+	cpFloat mass = 0.5;
+
+	// The moment of inertia is like mass for rotation
+	// Use the cpMomentFor*() functions to help you approximate it.
+	cpFloat moment = cpMomentForCircle(mass, 0, radius, cpvzero);
+
+	// The cpSpaceAdd*() functions return the thing that you are adding.
+	// It's convenient to create and add an object in one line.
+	cpBody *shipBody = cpSpaceAddBody(space, cpBodyNew(mass, moment));
+	cpBodySetPos(shipBody, cpv(10, 15));
+
+	cpShape *shipShape = cpSpaceAddShape(space, cpCircleShapeNew(shipBody, radius, cpvzero));
+	cpShapeSetFriction(shipShape, 0.7);
+
+
 	// Start game loop
 	while (App.IsOpened())
 	{
@@ -77,19 +92,47 @@ int main(int argc, char* argv[])
 		events = eventHandler.processEvents();
 
 		if (events.pressingUp)
-			shipPart.addForce(shipPart.getRotation(),1);
+			//cpBodyApplyImpulse( shipBody, cpv(-1*sin(shipBody->a),1*cos(shipBody->a)),cpv(0,0));
+			cpBodyApplyImpulse(
+					shipBody,
+					cpvrotate(cpv(0,1),shipBody->rot),
+					cpv(0,0));
 		if (events.pressingRight)
-			shipPart.addRotationalForce(-0.2);
+		{
+			cpBodyApplyImpulse(
+					shipBody,
+					cpvrotate(cpv(0,1),shipBody->rot),
+					cpvrotate(cpv(1,0),shipBody->rot));
+			cpBodyApplyImpulse(
+					shipBody,
+					cpvrotate(cpv(0,-1),shipBody->rot),
+					cpvrotate(cpv(-1,0),shipBody->rot));
+		}
 		if (events.pressingLeft)
-				shipPart.addRotationalForce(0.2);
-
+		{
+			cpBodyApplyImpulse(
+					shipBody,
+					cpvrotate(cpv(0,1),shipBody->rot),
+					cpvrotate(cpv(-1,0),shipBody->rot));
+			cpBodyApplyImpulse(
+					shipBody,
+					cpvrotate(cpv(0,-1),shipBody->rot),
+					cpvrotate(cpv(1,0),shipBody->rot));
+		}
 		if (events.pressingF9)
 			shipPart.setParticleProperties("res/config/ship_properties.yaml");
 
 		shipPart.update();
-		shipSprite.SetX(shipPart.getX());
-		shipSprite.SetY(shipPart.getY());
-		shipSprite.SetRotation(shipPart.getRotation()-90);
+
+		cpVect pos = cpBodyGetPos(shipBody);
+
+		double scaleScreen = 10;
+
+		shipSprite.SetX(pos.x*scaleScreen);
+		shipSprite.SetY(pos.y*scaleScreen);
+		shipSprite.SetRotation(-shipBody->a / PI * 180+180);
+
+		cpSpaceStep(space,1.0/60);
 
 		bgX += 0.01;
 		bgY += 0.005;
@@ -111,7 +154,7 @@ int main(int argc, char* argv[])
 		App.Display();
 	}
 
-#endif
+	#endif
 
 	return 0;
 }

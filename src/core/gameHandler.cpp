@@ -1,9 +1,17 @@
+
+
+#include <iostream>
+
 #include "gameHandler.hpp"
 #include "gameModel.hpp"
 
 GameHandler::GameHandler(sf::RenderWindow* renderWindow)
 {
-	gameModel = new GameModel(renderWindow);
+	framesPerSecond = 60;
+	renderWindow->UseVerticalSync(true);
+	renderWindow->SetFramerateLimit(framesPerSecond);
+
+	gameModel = new GameModel(renderWindow,framesPerSecond);
 }
 
 GameHandler::~GameHandler()

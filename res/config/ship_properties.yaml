@@ -2,11 +2,17 @@
 
 
 mass: 1
+moment: 5
+thrust: 1
+turningForce: 0.1
+velocity_max:	10
 
+
+# Non-working atm
 friction: 0.01
 
 angular_friction: 	0.08
-moment_of_inertia: 	5
 
-velocity_max:		10
+
 acceleration_max: 	2
+

@@ -17,6 +17,7 @@ public:
 
 private:
 	GameModel* gameModel;
+	unsigned framesPerSecond;
 };
 
 

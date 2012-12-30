@@ -51,7 +51,11 @@ void ResourceHandler::loadTextures()
 		char tmp[buf];
 		fin.getline(tmp,buf);
 		std::string fileToAdd(tmp);
+		if (fileToAdd.length()==0)
+			continue;
 		fileList.push_back(fileToAdd);
+
+		std::cout << "Adding "<<fileToAdd<<std::endl;
 
 		sf::Image* sprite = new sf::Image;
 		if (!sprite->LoadFromFile(fileToAdd.c_str()))
@@ -74,7 +78,6 @@ sf::Image* ResourceHandler::getImage(std::string filename)
 	if (it != spriteMap.end())
 		return it->second;
 	else
-
 		ERROR("Could not find "<<filename<<" in ResourceHandler");
 
 	return 0;

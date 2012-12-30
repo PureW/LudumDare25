@@ -1,27 +1,42 @@
 #include <iostream>
 #include <cmath>
 
+#include "chipmunk.h"
+
+#include "common.h"
 #include "gameModel.hpp"
 #include "motherShip.hpp"
 #include "entity.hpp"
-#include "areaEffect.hpp"
-#include "delayedExplosion.hpp"
+#include "enemies.h"
 
 using namespace std;
 
 
 
-GameModel::GameModel(sf::RenderWindow* renderWindow)
+GameModel::GameModel(sf::RenderWindow* renderWindow,unsigned framesPerSecond)
 {
 	this->renderWindow = renderWindow;
+	this->framesPerSecond = framesPerSecond;
 	done = false;
-	
-	Entity* entity = new Entity(this, std::string("res/sprites/ship1.png"), renderWindow, 
-		ENEMY, 100, 100, false, 20);
-	addEntity(entity);
+
+
+
+	scaleToScreen = 10;
+	space = cpSpaceNew();
+	space->damping = 0.5;
+
 	Entity* motherShip = new MotherShip(this, renderWindow);
-	motherShip->setDeathObject(new DelayedExplosion(this, renderWindow));
+	motherShip->setPosition(cpv(10,10));
 	addEntity(motherShip);
+
+	for (int x=20; x<70; x+=7)
+		for (int y=20; y<70; y+=7)
+		{
+			Entity* enemy = new Enemy(this,renderWindow);
+			enemy->setPosition(cpv(x,y));
+			addEntity(enemy);
+		}
+
 }
 
 
@@ -32,24 +47,13 @@ GameModel::~GameModel()
 		delete *entityIt;
 	}
 	
-	list<AreaEffect*>::iterator areaEffectIt;
-	for(areaEffectIt = areaEffects.begin(); areaEffectIt != areaEffects.end(); areaEffectIt++) {
-		delete *areaEffectIt;
-	}
+	cpSpaceFree( space );
 }
 
 void GameModel::addEntity(Entity* entity)
 {
 	entities.push_back(entity);
 }
-
-
-void GameModel::addAreaEffect(AreaEffect* areaEffect)
-{
-	areaEffects.push_back(areaEffect);
-}
-
-
 
 void GameModel::update()
 {
@@ -58,38 +62,19 @@ void GameModel::update()
 		(*entityIt)->update();
 	}
 	
-	list<AreaEffect*>::iterator areaEffectIt;
-	for(areaEffectIt = areaEffects.begin(); areaEffectIt != areaEffects.end(); areaEffectIt++) {
-		(*areaEffectIt)->update();
-	}
-	
-	
-	
 	entityIt = entities.begin();
 	while (entityIt != entities.end())
 	{
-		if((*entityIt)->isDestroyed()) {
+		if((*entityIt)->isDestroyed())
+		{
 			delete *entityIt;
-			entities.erase(entityIt++);	// ugly code...
+			entities.erase(entityIt);	// ugly code...
 		}
-		else {
-			entityIt++;
-		}
-	}
-	
-	areaEffectIt = areaEffects.begin();
-	while (areaEffectIt != areaEffects.end())
-	{
-		if((*areaEffectIt)->isDestroyed()) {
-			delete *areaEffectIt;
-			areaEffects.erase(areaEffectIt++);	// ugly code...
-		}
-		else {
-			areaEffectIt++;
-		}
+
+		entityIt++;
 	}
 
-
+	cpSpaceStep(space,1.0/framesPerSecond);
 }
 
 void GameModel::draw()
@@ -103,11 +88,6 @@ void GameModel::draw()
 	list<Entity*>::iterator entityIt;
 	for(entityIt=entities.begin(); entityIt != entities.end(); entityIt++) {
 		(*entityIt)->draw(screenOrigin_x, screenOrigin_y);
-	}
-	
-	list<AreaEffect*>::iterator areaEffectIt;
-	for(areaEffectIt=areaEffects.begin(); areaEffectIt != areaEffects.end(); areaEffectIt++) {
-		(*areaEffectIt)->draw(screenOrigin_x, screenOrigin_y);
 	}
 	
 	renderWindow->Display();
@@ -142,8 +122,9 @@ list<Entity*> GameModel::getEntitiesWithinRadius(float x, float y, float radius)
 
 bool GameModel::isEntityWithinRadius(Entity* entity, float x, float y, float radius)
 {
-	float distance = sqrt( pow(entity->get_x()-x, 2) + pow(entity->get_y()-y, 2) );
-	return distance <= radius;
+	//float distance = sqrt( pow(entity->get()-x, 2) + pow(entity->get_y()-y, 2) );
+	WARN("isEntityWithinRadius not workning");
+	return 0 <= radius;
 }
 
 
