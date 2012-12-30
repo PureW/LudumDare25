@@ -19,14 +19,13 @@ GameModel::GameModel(sf::RenderWindow* renderWindow,unsigned framesPerSecond)
 	this->framesPerSecond = framesPerSecond;
 	done = false;
 
-
-
 	scaleToScreen = 10;
 	space = cpSpaceNew();
 	space->damping = 0.5;
 
 	Entity* motherShip = new MotherShip(this, renderWindow);
 	motherShip->setPosition(cpv(10,10));
+
 	addEntity(motherShip);
 
 	for (int x=20; x<70; x+=7)
@@ -107,17 +106,37 @@ bool GameModel::isDone()
 }
 
 
-list<Entity*> GameModel::getEntitiesWithinRadius(float x, float y, float radius)
+list<Entity*> GameModel::getEntitiesWithinRadius(float x, float y, float radius, Entity* excludeEntity)
 {
 	list<Entity*> entitiesWithinRadius = list<Entity*>();
 	list<Entity*>::iterator entityIt;
 	for(entityIt = entities.begin(); entityIt != entities.end(); entityIt++) {
 		Entity* entity = *entityIt;
-		if(isEntityWithinRadius(entity, x, y, radius)) {
+		if(isEntityWithinRadius(entity, x, y, radius) && entity != excludeEntity) {
 			entitiesWithinRadius.push_back(entity);
 		}
 	}
+	
 	return entitiesWithinRadius;
+}
+
+MotherShip* GameModel::getMotherShip()
+{
+	return motherShip;
+}
+
+std::list<Entity*> GameModel::getEntitiesInTeam(Team team)
+{
+	list<Entity*> entitiesInTeam = list<Entity*>();
+	list<Entity*>::iterator entityIt;
+	for(entityIt = entities.begin(); entityIt != entities.end(); entityIt++) {
+		Entity* entity = *entityIt;
+	//	if(entity->getTeam() == team) {
+	//		entitiesInTeam.push_back(entity);
+		WARN("Broken");
+		//}
+	}
+	return entitiesInTeam;
 }
 
 bool GameModel::isEntityWithinRadius(Entity* entity, float x, float y, float radius)

@@ -35,7 +35,6 @@ public:
 	 *  See cpBodyApplyImpulse. */
 	void applyImpulse( cpVect j, cpVect r ) { cpBodyApplyImpulse(entityBody,j,r);};
 
-	Team getTeam() {return team;};
 	void applyDamage(int damageHP);
 	bool isDestroyed() {return destroyed;};
 

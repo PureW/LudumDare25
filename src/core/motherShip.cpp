@@ -23,6 +23,7 @@ MotherShip::MotherShip(GameModel* gameModel, sf::RenderWindow* renderWindow)
 	this->eventHandler = new EventHandler(renderWindow);
 
 	setBodyProperties("res/config/ship_properties.yaml");
+
 }
 
 MotherShip::~MotherShip()
@@ -72,6 +73,7 @@ void MotherShip::processInput()
 
 	if (events.pressingSpace && !oldEvents.pressingSpace)
 	{
+/*
 		std::cout << "Spawning projectile at "<<getPos().x<<"\n";
 		Projectile* proj = new Projectile(gameModel, renderWindow );
 		proj->setPosition( getPos() );
@@ -81,14 +83,18 @@ void MotherShip::processInput()
 
 		for (;it != entities.end(); ++it )
 		{
-			if (*it != (Entity*)this)
-			{
-				proj->setTarget(*it);
-				std::cout << "Setting target\n";
+			Entity* entity = *entityIt;
+			if(entity->getTeam() == ENEMY) {
+				std::cout << "Spawning projectile at "<<x<<"\n";
+				Projectile* proj = new Projectile(gameModel, renderWindow, ENEMY);
+				proj->setPosition( x, y );
+				proj->setTarget(entity);
+				gameModel->addEntity( proj );
+				
+				break;
 			}
-		}*/
 
-		gameModel->addEntity( proj );
+		}*/
 	}
 
 

@@ -11,7 +11,7 @@ class Projectile : public Entity
 {
 public:
 
-	Projectile( GameModel* gameModel, sf::RenderWindow* renderWindow );
+	Projectile( GameModel* gameModel, sf::RenderWindow* renderWindow);
 	~Projectile() {};
 
 	void onDestroy();
@@ -21,6 +21,7 @@ public:
 	void update();
 
 private:
+	Team myEnemyTeam;
 	Entity* target;
 
 };

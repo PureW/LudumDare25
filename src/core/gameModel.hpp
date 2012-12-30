@@ -5,8 +5,11 @@
 #include <SFML/Graphics.hpp>
 #include "chipmunk.h"
 
+#include "entity.hpp"
+
 class Entity;
 class AreaEffect;
+class MotherShip;
 
 class GameModel
 {
@@ -19,14 +22,17 @@ public:
 	void draw();
 	bool isDone();
 	void setCenterViewPosition(int x, int y);
-	std::list<Entity*> getEntitiesWithinRadius(float x, float y, float radius);
+	std::list<Entity*> getEntitiesWithinRadius(float x, float y, float radius, Entity* excludeEntity=NULL);
+	std::list<Entity*> getEntitiesInTeam(Team team);
+	MotherShip* getMotherShip();
+	bool isEntityWithinRadius(Entity* entity, float x, float y, float radius);
 	
 	cpSpace* getSpace() {return space;};
 	double getScaleToScreen() {return scaleToScreen;};
 
 private:
-	bool isEntityWithinRadius(Entity* entity, float x, float y, float radius);
 	
+	MotherShip* motherShip;
 	sf::RenderWindow* renderWindow;
 	unsigned framesPerSecond;
 
